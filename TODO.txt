@@ -1,0 +1,9 @@
+
+
+Model:
+
+The model is a Unity simulator to emulate the behaviour of the drone. It should interface with the arduino over a serial port receiving throttle signals and sending IMU data. Radio control may still be conventional.
+
+Radio Control:
+
+The arduino code to run the radio controller which will be used to control the drone. Will likely end up being two thumbsticks.

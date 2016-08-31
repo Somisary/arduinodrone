@@ -4,6 +4,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(8);
-  delay(100);        // delay in between reads for stability
+  int value = analogRead(0);
+  Serial.println(value);
+  delay(1000);        // delay in between reads for stability
 }
