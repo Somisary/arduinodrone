@@ -1,9 +1,10 @@
 void setup() {
-  // put your setup code here, to run once:
-
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  int value = analogRead(0);
+  Serial.println(value);
+  delay(1000);        // delay in between reads for stability
 }
