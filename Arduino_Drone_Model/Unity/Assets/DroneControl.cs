@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Thruster : MonoBehaviour {
+public class DroneControl : MonoBehaviour {
 
 	// Use this for initialization
+	public SerialController serialport;
 	public Rigidbody N_motor;
 	public Rigidbody S_motor;
 	public Rigidbody E_motor;
@@ -15,7 +16,6 @@ public class Thruster : MonoBehaviour {
 	{
 		int throttle = int.Parse (msg);
 		float thrust = Get_Thrust_From_Throttle (throttle);
-		print (thrust);
 		Set_Throttle (thrust/4, thrust/4, thrust/4, thrust/4);
 	}
 
@@ -42,10 +42,24 @@ public class Thruster : MonoBehaviour {
 		W_thrust = w;
 	}
 
+	float Round_Float(float num, int dp) {
+		return (Mathf.Round (num * Mathf.Pow (10.0f, dp)) / Mathf.Pow (10.0f, dp));
+	}
+
+	void Send_IMU_State() {
+		string data = "";
+		data += Round_Float(transform.rotation.x, 4) + " ";
+		data += Round_Float(transform.rotation.y, 4) + " ";
+		data += Round_Float(transform.rotation.z, 4) + " ";
+		data += Round_Float(transform.rotation.w, 4);
+		serialport.SendSerialMessage (data);
+	}
+
 	void Update () {
 		N_motor.AddRelativeForce (N_thrust * Vector3.up);
 		S_motor.AddRelativeForce (S_thrust * Vector3.up);
 		E_motor.AddRelativeForce (E_thrust * Vector3.up);
 		W_motor.AddRelativeForce (W_thrust * Vector3.up);
+		Send_IMU_State ();
 	}
 }
